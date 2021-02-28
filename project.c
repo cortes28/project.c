@@ -5,7 +5,9 @@
 
 
 //our table for tic-tac-toe
-int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, int status);
+int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, int status, int count);
+
+//void catsGame(char table[ROW][COLUMN]);
 
 void display();
 
@@ -14,11 +16,16 @@ char table[ROW][COLUMN] = {};
 //this status variable will be in use to see if tic tac toe game has been completed or not
 char player;
 int myRow, myColumn;
+int count;
+//a counter to see if the table is maxed and no winner->Cat's game
 
 int main()
 {
   int status = 1;
-  myRow = myColumn = 0;
+  myRow = myColumn = count = 0;
+
+
+
 	//we are going to print the first move for player 1 here and get his move
 	printf("Welcome to Tic-Tac-Toe\n");
 	printf("======================\n");
@@ -27,13 +34,14 @@ int main()
   while(status)
   {
     display();
-	  status = playerMoves(table, 'X', myRow, myColumn, status);
+    ++count;
+	  status = playerMoves(table, 'X', myRow, myColumn, status, count);
   }
 
 	return 0;
 }
 
-int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, int status)
+int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, int status, int count)
 {
 
 //	while (table[myRow][myColumn] == 'X' || table[myRow][myColumn] == 'O')
@@ -59,22 +67,38 @@ int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, i
 	//if(((table[0][0] == player) && (table[0][1] == player) && table[0][2]))
 	//lets actually create a function do to a true or false if the game has been completed
 
+
+  //Check if game should be ended if player won
 	for (int i = 0; i < 2; i++)
 	{
-		if(table[i][0] == table[i][1] && table[i][0] == table[i][2] || table[0][i] == table[1][i] && table[0][i] == table[2][i])
-    {
+		// if(table[i][0] == table[i][1] && table[i][0] == table[i][2] || table[0][i] == table[1][i] && table[0][i] == table[2][i])
+    // {
+      if(player == table[i][0] && player == table[i][1] && player == table[i][2] || player == table[0][i] && player == table[1][i] && player == table[2][i])
+      {
       printf("%c Player Wins!", player);
       display();
       return 0;
-    }
+      }
+    // }
 
-    if(table[0][0] == table [1][1] && table [0][0] || table[0][2] == table[1][1] && table[0][2] == table[2][0])
+    //check if player won diagnally
+    if(table[0][0] == table [1][1] && table [0][0] == table[2][2] || table[0][2] == table[1][1] && table[0][2] == table[2][0])
     {
+    //  if(player == table[0][0] && player )
       printf("%c Player Wins!", player);
       display();
       return 0;
     }
 	}
+
+//  ++count;
+
+  // if(count == 9)
+  // {
+  //   catsGame(table);
+  //   count = 0;
+  // }
+
 
   if(player == 'X')  { player = 'O';}
 
