@@ -31,8 +31,8 @@ int main()
     }
   }
 
-	printf("Welcome to Tic-Tac-Toe\n");
-	printf("======================\n");
+  printf("Welcome to Tic-Tac-Toe\n");
+  printf("======================\n");
 
   //while the game has not ended (game ends if status equals 0)
   do
@@ -45,14 +45,14 @@ int main()
     //function
     display();
     ++count;
-	  status = playerMoves(player, status, count);
+    status = playerMoves(player, status, count);
 
     if(player == 'X')  { player = 'O';}
 
     else { player = 'X'; }
   } while(status);
 
-	return 0;
+return 0;
 }
 
 int playerMoves(char player, int status, int count)
