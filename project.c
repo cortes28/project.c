@@ -100,9 +100,9 @@ int playerMoves(char player, int status, int count)
   if(player == table[0][0] && player == table[1][1] && player == table[2][2] ||
      player == table[0][2] && player == table[1][1] && player == table[2][0] )
   {
-  printf("%c Player Wins!", player);
-  display();
-  return 0;
+ 	 printf("%c Player Wins!", player);
+ 	 display();
+  	return 0;
   }
   //if the counter has reached 8 meaning all moves have been done
   //we end the game.
@@ -113,7 +113,7 @@ int playerMoves(char player, int status, int count)
     return 0;
   }
   //returns status while the game continues
-	return status;
+return status;
 }
 //our function to display our table of tic-tac-toe
 void display()
