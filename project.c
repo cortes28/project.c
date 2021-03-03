@@ -1,50 +1,67 @@
 #include <stdio.h>
-#define ROW 2
-#define COLUMN 2
-
-
+#define ROW 3
+#define COLUMN 3
 
 //our table for tic-tac-toe
-int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, int status, int count);
-
-//void catsGame(char table[ROW][COLUMN]);
+int playerMoves(char player, int status, int count);
 
 void display();
 
-char table[ROW][COLUMN] = {};
+char table[ROW][COLUMN];
 
 //this status variable will be in use to see if tic tac toe game has been completed or not
-char player;
-int myRow, myColumn;
+//int myRow, myColumn;
 int count;
 //a counter to see if the table is maxed and no winner->Cat's game
 
 int main()
 {
+  char player;
   int status = 1;
-  myRow = myColumn = count = 0;
+  count = 0;
+  player = 'X';
 
+  for(int i = 0; i < 3; i++)
+  {
+    for(int j = 0; j< 3; j++)
+    {
+      table[i][j] = ' ';
+    }
+  }
+  //making the empty table
 
 
 	//we are going to print the first move for player 1 here and get his move
+
 	printf("Welcome to Tic-Tac-Toe\n");
 	printf("======================\n");
-	printf("Player 1 turn 'X'\n");
 
-  while(status)
+
+  //while the game has not fully ended, we
+  do
   {
+
+    if(player == 'X')  { printf("Player 1 turn '%c'\n", player); }
+
+    else { printf("Player 2 turn '%c'\n", player); }
+
     display();
     ++count;
-	  status = playerMoves(table, 'X', myRow, myColumn, status, count);
-  }
+	  status = playerMoves(player, status, count);
+
+    if(player == 'X')  { player = 'O';}
+
+    else { player = 'X'; }
+  } while(status);
 
 	return 0;
 }
 
-int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, int status, int count)
+int playerMoves(char player, int status, int count)
 {
+int myRow, myColumn;
+myRow = myColumn = 0;
 
-//	while (table[myRow][myColumn] == 'X' || table[myRow][myColumn] == 'O')
   printf("Which Row would you like?\n");
   scanf("%d", &myRow);
 
@@ -61,74 +78,52 @@ int playerMoves(char table[ROW][COLUMN], char player, int myRow, int myColumn, i
 		printf("Which Column would you like?\n");
 		scanf("%d", &myColumn);
 	}
-
-	table[myRow][myColumn] = player;
-
-	//if(((table[0][0] == player) && (table[0][1] == player) && table[0][2]))
-	//lets actually create a function do to a true or false if the game has been completed
-
+  // display();
+  //
+  // printf("\nBefore insertion\n");
+  //
+  // // int row = myRow;
+  // // int col = myColumn;
+  //
+	  table[myRow][myColumn] = player;
 
   //Check if game should be ended if player won
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 2 && count > 2; i++)
 	{
-		// if(table[i][0] == table[i][1] && table[i][0] == table[i][2] || table[0][i] == table[1][i] && table[0][i] == table[2][i])
-    // {
+
       if(player == table[i][0] && player == table[i][1] && player == table[i][2] || player == table[0][i] && player == table[1][i] && player == table[2][i])
       {
       printf("%c Player Wins!", player);
       display();
       return 0;
       }
-    // }
 
-    //check if player won diagnally
-    if(table[0][0] == table [1][1] && table [0][0] == table[2][2] || table[0][2] == table[1][1] && table[0][2] == table[2][0])
-    {
-    //  if(player == table[0][0] && player )
+      if(player == table[0][0] && player == table[1][1] && player == table[2][2] || player == table[0][2] && player == table[1][1] && player == table[2][0] )
+      {
       printf("%c Player Wins!", player);
       display();
       return 0;
-    }
+      }
 	}
 
-//  ++count;
-
-  // if(count == 9)
-  // {
-  //   catsGame(table);
-  //   count = 0;
-  // }
-
-
-  if(player == 'X')  { player = 'O';}
-
-  else {player = 'X'; }
-
+  if(count == 8)
+  {
+    printf("\nCat's Game!\n");
+    display();
+    return 0;
+  }
 
 	return status;
 }
 
 void display()
 {
-  int row, column;
-
-	// for (row = 0; row < ROW + 1; row++)
-	// {
-	// 	for (column = 0; column < COLUMN + 1; column++)
-	// 	{
-	// 		printf("%c", table[row][column]);
-  //
-	// 		if (column < 2) { printf("|"); }
-  // 	}
-  // 	printf("\n------\n");
-  // }
-
-  printf("\n%c|%c|%c\n", table[0][0], table[0][1], table[0][2]);
-  printf("----------\n");
+  printf("\n");
+  printf("%c|%c|%c\n", table[0][0], table[0][1], table[0][2]);
+  printf("-----\n");
 
   printf("%c|%c|%c\n", table[1][0], table[1][1], table[1][2]);
-  printf("----------\n");
+  printf("-----\n");
 
   printf("%c|%c|%c\n", table[2][0], table[2][1], table[2][2]);
-
 }
